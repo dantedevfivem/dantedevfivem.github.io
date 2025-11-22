@@ -6,9 +6,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta
          name="description"
-         content="Dante – FiveM fejlesztő, 6 év tapasztalattal, egyedi script-ek, optimalizált rendszerek és teljes szerver megoldások."
+         content="Dante – FiveM fejlesztő, 6+ év tapasztalattal, egyedi RP rendszerek, custom script-ek és stabil FiveM szervermegoldások."
       />
 
+      <!-- LOGO / FAVICON -->
       <link rel="icon" type="image/png" href="dante-logo.png" />
       <link rel="icon" type="image/gif" href="dante-logo.gif" />
 
@@ -21,20 +22,18 @@
 
       <style>
          :root {
-            --bg: #050511;
-            --bg-alt: #0b0b1a;
-            --card: #111122;
-            --accent: #4eb6ff;
-            --accent-soft: rgba(78, 182, 255, 0.18);
-            --text-main: #f5f5ff;
-            --text-muted: #a3a3c2;
-            --danger: #ff4b81;
-            --success: #3dd68c;
-            --border-subtle: rgba(255, 255, 255, 0.08);
+            --bg: #05060a;
+            --bg-soft: #0b0d14;
+            --card: #10131d;
+            --accent: #4fa1ff;
+            --accent-soft: rgba(79, 161, 255, 0.14);
+            --text-main: #f5f7ff;
+            --text-muted: #9ca3c6;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-strong: rgba(255, 255, 255, 0.12);
             --radius-xl: 18px;
-            --radius-2xl: 28px;
+            --radius-2xl: 24px;
             --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
-            --shadow-glow: 0 0 80px rgba(78, 182, 255, 0.55);
             --transition-fast: 0.18s ease-out;
             --transition-slow: 0.32s ease-out;
          }
@@ -47,7 +46,7 @@
 
          body {
             font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            background: radial-gradient(circle at top, #181835 0, #050511 52%, #020208 100%);
+            background: radial-gradient(circle at top, #171a27 0, #05060a 55%, #030308 100%);
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
@@ -58,9 +57,9 @@
             content: "";
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 10% 10%, rgba(78, 182, 255, 0.2), transparent 50%),
-               radial-gradient(circle at 90% 80%, rgba(255, 75, 129, 0.18), transparent 55%);
-            opacity: 0.8;
+            background: radial-gradient(circle at 12% 0%, rgba(79, 161, 255, 0.16), transparent 50%),
+               radial-gradient(circle at 90% 100%, rgba(255, 255, 255, 0.06), transparent 55%);
+            opacity: 0.9;
             pointer-events: none;
             z-index: -2;
          }
@@ -71,19 +70,13 @@
             inset: 0;
             background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            opacity: 0.4;
+            background-size: 44px 44px;
+            opacity: 0.35;
             z-index: -3;
-            animation: gridFloat 16s linear infinite;
          }
 
-         @keyframes gridFloat {
-            from {
-               transform: translate3d(0, 0, 0);
-            }
-            to {
-               transform: translate3d(-40px, -40px, 0);
-            }
+         body.splash-active {
+            overflow: hidden;
          }
 
          a {
@@ -94,16 +87,69 @@
          .wrapper {
             max-width: 1120px;
             margin: 0 auto;
-            padding: 24px 18px 80px;
+            padding: 24px 18px 72px;
+            transition: opacity 0.6s ease-out, filter 0.6s ease-out, transform 0.6s ease-out;
          }
 
+         body.splash-active .wrapper {
+            opacity: 0;
+            filter: blur(6px);
+            transform: translateY(10px);
+            pointer-events: none;
+         }
+
+         /* SPLASH */
+         #splash {
+            position: fixed;
+            inset: 0;
+            background: #02030a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            animation: splashFade 1.6s ease-out 0.1s forwards;
+         }
+
+         #splash-inner {
+            width: 140px;
+            height: 140px;
+            border-radius: 999px;
+            padding: 10px;
+            background: radial-gradient(circle, rgba(79, 161, 255, 0.35), transparent 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         }
+
+         #splash-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 999px;
+            box-shadow: 0 0 36px rgba(79, 161, 255, 0.9);
+         }
+
+         @keyframes splashFade {
+            0% {
+               opacity: 1;
+            }
+            75% {
+               opacity: 1;
+            }
+            100% {
+               opacity: 0;
+               pointer-events: none;
+            }
+         }
+
+         /* NAVBAR */
          .navbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 10px 18px;
             border-radius: 999px;
-            background: rgba(5, 5, 18, 0.92);
+            background: rgba(5, 7, 14, 0.92);
             border: 1px solid var(--border-subtle);
             box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(18px);
@@ -115,7 +161,7 @@
          .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
          }
 
          .brand-logo {
@@ -123,9 +169,9 @@
             height: 34px;
             border-radius: 999px;
             overflow: hidden;
-            background: radial-gradient(circle, rgba(78, 182, 255, 0.5), transparent 60%);
+            background: radial-gradient(circle, rgba(79, 161, 255, 0.4), transparent 65%);
             padding: 3px;
-            box-shadow: 0 0 40px rgba(78, 182, 255, 0.9);
+            box-shadow: 0 0 26px rgba(79, 161, 255, 0.75);
          }
 
          .brand-logo img {
@@ -134,19 +180,6 @@
             object-fit: contain;
             display: block;
             border-radius: inherit;
-            animation: logoPulse 3s ease-in-out infinite;
-         }
-
-         @keyframes logoPulse {
-            0%,
-            100% {
-               transform: scale(1);
-               filter: drop-shadow(0 0 10px rgba(78, 182, 255, 0.7));
-            }
-            50% {
-               transform: scale(1.06);
-               filter: drop-shadow(0 0 18px rgba(78, 182, 255, 1));
-            }
          }
 
          .brand-text-main {
@@ -186,16 +219,16 @@
          }
 
          .nav-link.cta {
-            background: linear-gradient(135deg, var(--accent), #9a86ff);
-            color: #050510;
+            background: linear-gradient(135deg, var(--accent), #9aaeff);
+            color: #05060a;
             font-weight: 600;
-            box-shadow: var(--shadow-glow);
-            padding-inline: 16px;
+            box-shadow: 0 0 26px rgba(79, 161, 255, 0.85);
+            padding-inline: 18px;
          }
 
          .nav-link.cta:hover {
             transform: translateY(-1px);
-            box-shadow: 0 0 40px rgba(78, 182, 255, 1);
+            box-shadow: 0 0 34px rgba(79, 161, 255, 1);
          }
 
          @media (max-width: 860px) {
@@ -207,16 +240,17 @@
             }
          }
 
+         /* HERO */
          main {
             margin-top: 32px;
          }
 
          .hero {
             display: grid;
-            grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-            gap: 32px;
+            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            gap: 36px;
             align-items: center;
-            margin-bottom: 80px;
+            margin-bottom: 72px;
          }
 
          @media (max-width: 860px) {
@@ -231,49 +265,39 @@
             gap: 8px;
             padding: 4px 10px 4px 4px;
             border-radius: 999px;
-            border: 1px solid rgba(78, 182, 255, 0.5);
+            border: 1px solid rgba(79, 161, 255, 0.45);
             background: radial-gradient(
                circle at 0% 0%,
-               rgba(78, 182, 255, 0.35),
-               rgba(5, 5, 16, 0.9)
+               rgba(79, 161, 255, 0.3),
+               rgba(5, 6, 12, 0.95)
             );
-            box-shadow: 0 0 26px rgba(78, 182, 255, 0.45);
             margin-bottom: 18px;
          }
 
          .hero-tag-dot {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 999px;
-            background: radial-gradient(circle, #3dd68c, #1a4030);
-            box-shadow: 0 0 18px rgba(61, 214, 140, 0.85);
-            position: relative;
-         }
-
-         .hero-tag-dot::after {
-            content: "";
-            position: absolute;
-            inset: 3px;
-            border-radius: inherit;
-            border: 2px solid rgba(5, 5, 14, 0.85);
+            background: radial-gradient(circle, #3dd68c, #1c3f2d);
+            box-shadow: 0 0 14px rgba(61, 214, 140, 0.9);
          }
 
          .hero-tag-text {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.16em;
-            color: #dfffee;
+            color: #e4fff1;
          }
 
          .hero-title {
-            font-size: clamp(32px, 5vw, 44px);
-            line-height: 1.05;
-            margin-bottom: 14px;
-            letter-spacing: 0.02em;
+            font-size: clamp(32px, 5vw, 42px);
+            line-height: 1.08;
+            margin-bottom: 16px;
+            letter-spacing: 0.01em;
          }
 
          .hero-title span.highlight {
-            background: linear-gradient(120deg, #f7f7ff, #c0e0ff, #4eb6ff);
+            background: linear-gradient(125deg, #f7f7ff, #c9d6ff, #4fa1ff);
             -webkit-background-clip: text;
             color: transparent;
          }
@@ -281,15 +305,15 @@
          .hero-subtitle {
             font-size: 14px;
             color: var(--text-muted);
-            max-width: 520px;
-            line-height: 1.6;
+            max-width: 540px;
+            line-height: 1.7;
             margin-bottom: 20px;
          }
 
          .hero-stats {
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 12px;
             margin-bottom: 24px;
          }
 
@@ -297,7 +321,7 @@
             padding: 8px 12px;
             border-radius: 999px;
             border: 1px solid var(--border-subtle);
-            background: rgba(8, 8, 22, 0.85);
+            background: rgba(9, 11, 20, 0.92);
             font-size: 12px;
             color: var(--text-muted);
             display: inline-flex;
@@ -331,34 +355,34 @@
          }
 
          .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #9a86ff);
-            color: #050510;
+            background: linear-gradient(135deg, var(--accent), #9aaeff);
+            color: #05060a;
             font-weight: 600;
-            box-shadow: var(--shadow-glow);
+            box-shadow: 0 0 26px rgba(79, 161, 255, 0.85);
          }
 
          .btn-primary:hover {
             transform: translateY(-1px) translateZ(0);
-            box-shadow: 0 0 40px rgba(78, 182, 255, 1);
+            box-shadow: 0 0 34px rgba(79, 161, 255, 1);
          }
 
          .btn-ghost {
             border-color: var(--border-subtle);
-            background: rgba(2, 2, 14, 0.7);
+            background: rgba(4, 6, 16, 0.9);
             color: var(--text-muted);
          }
 
          .btn-ghost:hover {
-            border-color: rgba(255, 255, 255, 0.12);
+            border-color: var(--border-strong);
             color: var(--text-main);
-            background: rgba(10, 10, 26, 0.95);
+            background: rgba(9, 11, 22, 0.98);
          }
 
+         /* HERO RIGHT */
          .hero-right {
-            position: relative;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 18px;
             align-items: stretch;
          }
 
@@ -368,11 +392,10 @@
             height: 130px;
             border-radius: 999px;
             overflow: hidden;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.4), transparent 65%);
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.5), transparent 65%);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 40px rgba(78, 182, 255, 0.8);
          }
 
          .hero-logo-anim img {
@@ -380,31 +403,31 @@
             height: 100%;
             object-fit: contain;
             display: block;
+            border-radius: inherit;
          }
 
          .dev-card {
-            position: relative;
             border-radius: var(--radius-2xl);
             background: radial-gradient(
                circle at 0% 0%,
-               rgba(78, 182, 255, 0.32),
-               rgba(5, 5, 16, 0.95)
+               rgba(79, 161, 255, 0.28),
+               rgba(6, 7, 16, 0.98)
             );
-            border: 1px solid rgba(224, 230, 255, 0.18);
-            padding: 20px 18px 18px;
+            border: 1px solid rgba(214, 224, 255, 0.18);
+            padding: 18px 18px 16px;
             overflow: hidden;
-            box-shadow: var(--shadow-soft), var(--shadow-glow);
+            box-shadow: var(--shadow-soft);
          }
 
          .dev-card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
          }
 
          .dev-card-title {
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.16em;
             color: #dde3ff;
@@ -416,13 +439,13 @@
          }
 
          .dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 999px;
          }
 
          .dot.red {
-            background: #ff4b81;
+            background: #ff5c7a;
          }
          .dot.amber {
             background: #ffc857;
@@ -433,12 +456,12 @@
 
          .code-window {
             border-radius: 14px;
-            background: rgba(6, 6, 16, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(6, 6, 14, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
                "Liberation Mono", "Courier New", monospace;
             font-size: 11px;
-            padding: 12px 14px;
+            padding: 11px 13px;
             color: #e6f2ff;
             position: relative;
             overflow: hidden;
@@ -447,7 +470,7 @@
          .code-line {
             display: flex;
             gap: 10px;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             white-space: nowrap;
          }
 
@@ -489,48 +512,31 @@
             border-radius: 999px;
             border: 1px solid rgba(210, 220, 255, 0.25);
             color: #dde3ff;
-            background: linear-gradient(135deg, rgba(180, 192, 255, 0.18), rgba(6, 6, 16, 0.9));
+            background: linear-gradient(135deg, rgba(180, 192, 255, 0.12), rgba(6, 6, 16, 0.9));
          }
 
          .floating-tag {
             position: absolute;
-            right: -12px;
+            right: 12px;
             bottom: 12px;
-            padding: 10px 16px;
+            padding: 8px 12px;
             border-radius: 999px;
-            background: rgba(5, 5, 18, 0.96);
-            border: 1px solid rgba(225, 232, 255, 0.16);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background: rgba(4, 5, 12, 0.98);
+            border: 1px solid rgba(225, 232, 255, 0.18);
             font-size: 11px;
             color: var(--text-muted);
-            transform: translateY(0);
-            animation: floatTag 6s ease-in-out infinite;
          }
 
          .floating-tag strong {
-            color: var(--success);
+            color: #c0ffe0;
             text-transform: uppercase;
             font-size: 10px;
             letter-spacing: 0.12em;
          }
 
-         @keyframes floatTag {
-            0% {
-               transform: translateY(0);
-            }
-            50% {
-               transform: translateY(-6px);
-            }
-            100% {
-               transform: translateY(0);
-            }
-         }
-
+         /* SECTIONS */
          .section {
-            margin-bottom: 64px;
+            margin-bottom: 60px;
          }
 
          .section-header {
@@ -552,9 +558,11 @@
          .section-subtitle {
             font-size: 13px;
             color: var(--text-muted);
-            max-width: 460px;
+            max-width: 480px;
+            line-height: 1.6;
          }
 
+         /* GRID / CARDS */
          .grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -575,19 +583,19 @@
 
          .card {
             border-radius: var(--radius-xl);
-            background: rgba(8, 8, 24, 0.96);
+            background: rgba(9, 11, 20, 0.96);
             border: 1px solid var(--border-subtle);
             padding: 16px 16px 18px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
             transition: var(--transition-slow);
          }
 
          .card:hover {
-            transform: translateY(-4px) translateZ(0);
+            transform: translateY(-3px) translateZ(0);
             border-color: rgba(187, 197, 255, 0.35);
-            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.78);
          }
 
          .card-label {
@@ -641,7 +649,7 @@
             inset-inline: 0;
             top: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(78, 182, 255, 0.9), transparent);
+            background: linear-gradient(90deg, transparent, rgba(79, 161, 255, 0.85), transparent);
             opacity: 0;
             transform: translateY(-5px);
             transition: var(--transition-slow);
@@ -652,6 +660,7 @@
             transform: translateY(0);
          }
 
+         /* STACK GRID */
          .stack-grid {
             display: grid;
             grid-template-columns: 1.3fr 1fr;
@@ -674,7 +683,7 @@
             padding: 10px 12px;
             border-radius: 14px;
             border: 1px solid var(--border-subtle);
-            background: rgba(8, 8, 24, 0.96);
+            background: rgba(8, 9, 20, 0.96);
             font-size: 12px;
             min-width: 110px;
          }
@@ -701,7 +710,7 @@
          .stack-meter-fill {
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(90deg, var(--accent), #9a86ff);
+            background: linear-gradient(90deg, var(--accent), #9aaeff);
             width: var(--level, 80%);
             transform-origin: left center;
             transform: scaleX(0.1);
@@ -747,16 +756,56 @@
             font-size: 13px;
          }
 
+         /* REFERENCES */
+         .ref-list {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+         }
+
+         @media (max-width: 980px) {
+            .ref-list {
+               grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+         }
+
+         @media (max-width: 640px) {
+            .ref-list {
+               grid-template-columns: 1fr;
+            }
+         }
+
+         .ref-item {
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            padding: 8px 12px;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            background: rgba(9, 10, 20, 0.96);
+         }
+
+         .ref-name {
+            font-weight: 500;
+         }
+
+         .ref-note {
+            font-size: 11px;
+            color: var(--text-muted);
+         }
+
+         /* CONTACT */
          .contact-card {
             border-radius: var(--radius-2xl);
             padding: 18px 18px 20px;
             background: radial-gradient(
                circle at 0% 0%,
-               rgba(255, 75, 129, 0.28),
-               rgba(6, 6, 18, 0.96)
+               rgba(255, 75, 129, 0.24),
+               rgba(7, 5, 14, 0.98)
             );
-            border: 1px solid rgba(255, 192, 224, 0.45);
-            box-shadow: var(--shadow-soft), 0 0 60px rgba(255, 75, 129, 0.55);
+            border: 1px solid rgba(255, 192, 224, 0.42);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.85);
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 18px;
@@ -778,7 +827,8 @@
             font-size: 13px;
             color: #ffe6f3;
             margin-bottom: 14px;
-            max-width: 440px;
+            max-width: 460px;
+            line-height: 1.6;
          }
 
          .contact-channels {
@@ -790,9 +840,9 @@
          .contact-pill {
             padding: 8px 12px;
             border-radius: 999px;
-            border: 1px solid rgba(255, 223, 247, 0.6);
+            border: 1px solid rgba(255, 223, 247, 0.65);
             font-size: 12px;
-            background: rgba(8, 0, 14, 0.8);
+            background: rgba(8, 0, 14, 0.9);
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -816,15 +866,15 @@
          }
 
          .contact-pill.button-like:hover {
-            background: rgba(20, 0, 40, 0.95);
+            background: rgba(20, 0, 40, 0.96);
             transform: translateY(-1px);
-            box-shadow: 0 0 16px rgba(255, 192, 224, 0.6);
+            box-shadow: 0 0 18px rgba(255, 192, 224, 0.7);
          }
 
          .contact-form {
             border-radius: 16px;
-            background: rgba(5, 0, 10, 0.7);
-            border: 1px solid rgba(255, 192, 224, 0.4);
+            background: rgba(5, 0, 10, 0.75);
+            border: 1px solid rgba(255, 192, 224, 0.42);
             padding: 12px;
             font-size: 12px;
             color: #ffe6f7;
@@ -848,7 +898,7 @@
          .field textarea {
             border-radius: 10px;
             border: 1px solid rgba(255, 210, 240, 0.4);
-            background: rgba(12, 0, 24, 0.9);
+            background: rgba(12, 0, 24, 0.96);
             padding: 7px 9px;
             font-size: 12px;
             color: inherit;
@@ -859,13 +909,13 @@
 
          .field input::placeholder,
          .field textarea::placeholder {
-            color: rgba(255, 210, 240, 0.6);
+            color: rgba(255, 210, 240, 0.65);
          }
 
          .field input:focus,
          .field textarea:focus {
             border-color: #ffffff;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
          }
 
          .small-note {
@@ -885,17 +935,18 @@
             cursor: pointer;
             background: linear-gradient(135deg, #ff4b81, #ffc857);
             color: #190010;
-            box-shadow: 0 0 40px rgba(255, 75, 129, 0.8);
+            box-shadow: 0 0 32px rgba(255, 75, 129, 0.85);
             transition: var(--transition-slow);
          }
 
          .contact-submit:hover {
             transform: translateY(-1px);
-            box-shadow: 0 0 50px rgba(255, 75, 129, 1);
+            box-shadow: 0 0 40px rgba(255, 75, 129, 1);
          }
 
+         /* FOOTER */
          footer {
-            margin-top: 40px;
+            margin-top: 36px;
             padding-top: 18px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 11px;
@@ -925,6 +976,7 @@
             color: var(--text-main);
          }
 
+         /* REVEAL */
          .reveal {
             opacity: 0;
             transform: translateY(18px);
@@ -935,10 +987,72 @@
             opacity: 1;
             transform: translateY(0);
          }
+
+         /* START SCREEN */
+         #start-screen {
+            position: fixed;
+            inset: 0;
+            background: black;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease-out;
+         }
+
+         #start-btn {
+            font-family: "Inter", sans-serif;
+            font-size: 18px;
+            letter-spacing: 0.15em;
+            padding: 16px 36px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #4fa1ff, #9aaeff);
+            color: #05060a;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 35px rgba(79, 161, 255, 0.8);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+         }
+
+         #start-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 45px rgba(79, 161, 255, 1);
+         }
+
+         /* VIDEO SPLASH */
+         #video-splash {
+            position: fixed;
+            inset: 0;
+            background: black;
+            z-index: 9999;
+            display: none; /* start gomb után jelenik meg */
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease-out;
+         }
+
+         #video-splash video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+         }
       </style>
    </head>
-   <body>
+   <body class="splash-active">
+      <!-- START SCREEN -->
+      <div id="start-screen">
+         <button id="start-btn">PORTOFOLIO MEGNYITÁSA</button>
+      </div>
+
+      <!-- VIDEO SPLASH -->
+      <div id="video-splash">
+         <video id="intro-video" playsinline>
+            <source src="7vesba9f69rme0ctncsv757mpw_result_.mp4" type="video/mp4" />
+         </video>
+      </div>
+
       <div class="wrapper">
+         <!-- NAV -->
          <header class="navbar">
             <div class="brand">
                <div class="brand-logo">
@@ -952,12 +1066,14 @@
             <nav class="nav-links">
                <a href="#about" class="nav-link">Rólam</a>
                <a href="#experience" class="nav-link">Tapasztalat</a>
+               <a href="#references" class="nav-link">References</a>
                <a href="#stack" class="nav-link">Tech Stack</a>
                <a href="#contact" class="nav-link cta">Kapcsolat</a>
             </nav>
          </header>
 
          <main>
+            <!-- HERO -->
             <section class="hero reveal">
                <div class="hero-left">
                   <div class="hero-tag">
@@ -966,26 +1082,26 @@
                   </div>
                   <h1 class="hero-title">
                      <span class="highlight">FiveM fejlesztő</span><br />
-                     aki szervereket nem csak összerak, hanem
-                     <span class="highlight">branddé tesz.</span>
+                     aki RP szerverekhez teljes rendszert, nem csak script-eket szállít.
                   </h1>
                   <p class="hero-subtitle">
-                     6 éve építek és skálázok FiveM szervereket – teljes rendszerek, egyedi
-                     script-ek, optimalizált performance és élmény, amire a játékosok visszajárnak.
+                     6+ éve fejlesztek FiveM-re – szerveroldali logika, RP rendszerek, egyedi
+                     megoldások, stabil alapok komoly közösségeknek. Nem “packokat” rakok egymásra,
+                     hanem átgondolt struktúrákat építek.
                   </p>
 
                   <div class="hero-stats">
                      <div class="pill">
                         <strong>6+ év</strong>
-                        tapasztalat FiveM fejlesztésben
+                        FiveM fejlesztői tapasztalat
                      </div>
                      <div class="pill">
-                        <strong>4ma RP, Nerdwise RP, MLRP</strong>
-                        &amp; több más komoly szerver
+                        <strong>4ma RP, Nerdwise RP, MLRP, RP-RP-RP</strong>
+                        mint referenciák
                      </div>
                      <div class="pill">
-                        <strong>End-to-end</strong>
-                        script, UI, optimalizáció, deploy
+                        <strong>Full RP system</strong>
+                        jobs, economy, faction, inventory, NUI
                      </div>
                   </div>
 
@@ -1021,7 +1137,7 @@
                            <span class="code-line-number">01</span>
                            <span
                               ><span class="code-comment"
-                                 >-- High-performance FiveM core built for serious RP servers</span
+                                 >-- Core logic for serious RP servers</span
                               ></span
                            >
                         </div>
@@ -1049,8 +1165,8 @@
                               ><span class="code-keyword">local</span>
                               <span class="code-obj">Dante</span> = {
                               <span class="code-obj">years</span> = 6,
-                              <span class="code-obj">scripts</span> =
-                              <span class="code-str">"custom-heavy"</span> }</span
+                              <span class="code-obj">focus</span> =
+                              <span class="code-str">"full-rp-systems"</span> }</span
                            >
                         </div>
                         <div class="code-line">
@@ -1066,95 +1182,100 @@
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">07</span>
-                           <span>
-                              srv:<span class="code-fn">OptimizeTickRate</span>()
-                              <span class="code-comment">-- reduce ms spikes</span></span
-                           >
+                           <span> srv:<span class="code-fn">SetupJobs</span>()</span>
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">08</span>
-                           <span>
-                              srv:<span class="code-fn">SecureEvents</span>()
-                              <span class="code-comment"
-                                 >-- anti-cheat friendly structure</span
-                              ></span
-                           >
+                           <span> srv:<span class="code-fn">SetupEconomy</span>()</span>
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">09</span>
-                           <span>
-                              srv:<span class="code-fn">AddCustomSystems</span>({
-                              <span class="code-str">"jobs"</span>,
-                              <span class="code-str">"inventory"</span>,
-                              <span class="code-str">"gangs"</span>,
-                              <span class="code-str">"economy"</span> })</span
-                           >
+                           <span> srv:<span class="code-fn">SetupFactions</span>()</span>
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">10</span>
-                           <span> srv:<span class="code-fn">Launch</span>()</span>
+                           <span> srv:<span class="code-fn">SetupInventory</span>()</span>
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">11</span>
-                           <span><span class="code-keyword">end</span></span>
+                           <span>
+                              srv:<span class="code-fn">Launch</span>()
+                              <span class="code-comment">-- ready to roleplay</span></span
+                           >
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">12</span>
-                           <span></span>
+                           <span><span class="code-keyword">end</span></span>
                         </div>
                         <div class="code-line">
                            <span class="code-line-number">13</span>
+                           <span></span>
+                        </div>
+                        <div class="code-line">
+                           <span class="code-line-number">14</span>
                            <span
                               ><span class="code-fn">Dante:AttachTo</span>(<span class="code-obj"
                                  >Server</span
-                              >) <span class="code-comment">-- ready to play</span></span
+                              >)</span
                            >
                         </div>
                      </div>
 
                      <div class="badge-stack">
                         <div class="badge">Lua / FiveM</div>
-                        <div class="badge">QB / ESX / Custom</div>
-                        <div class="badge">Optimization</div>
-                        <div class="badge">Full-stack game logic</div>
+                        <div class="badge">QBCore / ESX / custom</div>
+                        <div class="badge">Server-side logic</div>
+                        <div class="badge">NUI / RP systems</div>
                      </div>
 
                      <div class="floating-tag">
                         <div>
-                           <strong>Live-ready</strong><br />
-                           stabil, optimalizált rendszerek, kemény terhelésre.
+                           <strong>Production ready</strong><br />
+                           stabil, átlátható, hosszú távra tervezett rendszer.
                         </div>
                      </div>
                   </div>
                </div>
             </section>
 
+            <!-- ABOUT -->
             <section id="about" class="section reveal">
                <div class="section-header">
-                  <h2 class="section-title">Rólam &amp; Tapasztalat</h2>
+                  <h2 class="section-title">Rólam &amp; szemlélet</h2>
                   <p class="section-subtitle">
-                     Több év komoly szervereken szerzett tapasztalat: stabil alap, tiszta kód, és
-                     olyan rendszerek, amik nem esnek szét, ha egyszerre 120+ játékos van fent.
+                     FiveM fejlesztőként nem csak funkciókat, hanem teljes rendszert tervezek:
+                     játékmenet logika, adatmodell, admin szempontok, hosszú távú fenntarthatóság. A
+                     cél, hogy a szerver önazonos, stabil és fejleszthető maradjon – ne egy egymásra
+                     pakolt script halmaz legyen.
                   </p>
                </div>
             </section>
 
+            <!-- EXPERIENCE -->
             <section id="experience" class="section reveal">
+               <div class="section-header">
+                  <h2 class="section-title">Tapasztalat RP szervereken</h2>
+                  <p class="section-subtitle">
+                     Több különböző stílusú RP szerveren is dolgoztam – mindegyiknél más volt a
+                     fókusz, de közös bennük, hogy stabil, átgondolt rendszerre volt szükség.
+                  </p>
+               </div>
+
                <div class="grid">
                   <article class="card">
                      <div class="card-accent-line"></div>
                      <div class="card-label">Kiemelt szerver</div>
                      <h3 class="card-title">4ma RP</h3>
-                     <div class="card-meta">Core systems &amp; custom scripts</div>
+                     <div class="card-meta">Core systems &amp; custom RP logic</div>
                      <p class="card-body">
-                        Közreműködés a core funkciók finomhangolásában, egyedi script-ek fejlesztése
-                        (játékos gazdaság, munkarendszerek, frakció logika) és stabilitás javítás
-                        éles, nagy forgalmú környezetben.
+                        Core funkciók finomhangolása, frakció- és gazdasági logika kialakítása,
+                        szerveroldali rendszerek egységesítése. Olyan alapot építettem, amihez
+                        később biztonságosan lehetett új funkciókat csatlakoztatni.
                      </p>
                      <div class="tag-row">
                         <span class="tag">Core framework</span>
-                        <span class="tag">Economy balance</span>
-                        <span class="tag">Job systems</span>
+                        <span class="tag">Economy</span>
+                        <span class="tag">Faction logic</span>
                      </div>
                   </article>
 
@@ -1162,44 +1283,76 @@
                      <div class="card-accent-line"></div>
                      <div class="card-label">Kiemelt szerver</div>
                      <h3 class="card-title">Nerdwise RP</h3>
-                     <div class="card-meta">Performance &amp; UX fókusz</div>
+                     <div class="card-meta">UX &amp; rendszer finomhangolás</div>
                      <p class="card-body">
-                        Script optimalizálás, load time csökkentés, client-side terhelés
-                        minimalizálása. UI/UX oldalon olyan megoldások, amiktől a játékosok
-                        könnyebben értik és szeretik a rendszert.
+                        Script-ek átdolgozása, egységes viselkedés kialakítása, átláthatóbb logika.
+                        NUI felületek, jobb játékos-flow, érthetőbb rendszerek – kevesebb zavar,
+                        több élmény.
                      </p>
                      <div class="tag-row">
-                        <span class="tag">Optimization</span>
-                        <span class="tag">Client performance</span>
-                        <span class="tag">UI/UX scripting</span>
+                        <span class="tag">NUI</span>
+                        <span class="tag">UX</span>
+                        <span class="tag">Refactor</span>
                      </div>
                   </article>
 
                   <article class="card">
                      <div class="card-accent-line"></div>
                      <div class="card-label">Kiemelt szerver</div>
-                     <h3 class="card-title">MLRP &amp; további projektek</h3>
-                     <div class="card-meta">Komplex rendszerek és maintanance</div>
+                     <h3 class="card-title">MLRP &amp; RP-RP-RP</h3>
+                     <div class="card-meta">Rendszerépítés &amp; karbantartás</div>
                      <p class="card-body">
-                        Frissítések, bugfix, legacy kód átdolgozás, modernizálás. Több
-                        kisebb-nagyobb szerveren segítettem elindítani vagy újraépíteni a teljes
-                        játékmenet logikát.
+                        Összetett RP rendszerek építése és karbantartása, legacy kód modernizálása,
+                        hibajavítás, script-ek közti függőségek rendezése. A cél mindig az volt,
+                        hogy a rendszer átláthatóbb és hosszabb távon kezelhetőbb legyen.
                      </p>
                      <div class="tag-row">
-                        <span class="tag">Refactor</span>
+                        <span class="tag">Legacy → modern</span>
                         <span class="tag">Bugfix</span>
-                        <span class="tag">Migration</span>
+                        <span class="tag">System maintenance</span>
                      </div>
                   </article>
                </div>
             </section>
+
+            <!-- REFERENCES -->
+            <section id="references" class="section reveal">
+               <div class="section-header">
+                  <h2 class="section-title">References / Past servers</h2>
+                  <p class="section-subtitle">
+                     Néhány szerver, ahol már dolgoztam fejlesztőként. A pontos feladat mindenhol
+                     más volt, de közös, hogy nem egyszeri “script drop”, hanem felelősségteljes
+                     rendszerépítés volt a cél.
+                  </p>
+               </div>
+
+               <div class="ref-list">
+                  <div class="ref-item">
+                     <span class="ref-name">4ma RP</span>
+                     <span class="ref-note">core rendszerek, gazdaság, RP logika</span>
+                  </div>
+                  <div class="ref-item">
+                     <span class="ref-name">Nerdwise RP</span>
+                     <span class="ref-note">NUI, felhasználói élmény, script átdolgozás</span>
+                  </div>
+                  <div class="ref-item">
+                     <span class="ref-name">MLRP</span>
+                     <span class="ref-note">legacy kód rendbe tétele, bővíthető struktúra</span>
+                  </div>
+                  <div class="ref-item">
+                     <span class="ref-name">RP-RP-RP</span>
+                     <span class="ref-note">komplex RP rendszer fejlesztés &amp; karbantartás</span>
+                  </div>
+               </div>
+            </section>
+
+            <!-- STACK -->
             <section id="stack" class="section reveal">
                <div class="section-header">
-                  <h2 class="section-title">Tech Stack &amp; Fókusz</h2>
+                  <h2 class="section-title">Tech stack &amp; fókusz</h2>
                   <p class="section-subtitle">
-                     Nem csak script-eket írok, hanem komplett rendszert gondolok át: backend
-                     logika, adatbázis, kliens oldali élmény és admin tooling – hogy az egész
-                     szerver működjön, ne csak “futson”.
+                     A cél, hogy a szerver ne csak induljon, hanem hosszú távon is kezelhető legyen.
+                     Ehhez tiszta kód, érthető struktúra és jól dokumentálható rendszer kell.
                   </p>
                </div>
 
@@ -1207,37 +1360,39 @@
                   <div class="stack-list">
                      <div class="stack-item">
                         <strong>Lua / FiveM API</strong>
-                        <span>core funkciók, eventek, resource management</span>
+                        <span>core event kezelés, szerveroldali logika, resources</span>
                         <div class="stack-meter">
                            <div class="stack-meter-fill" style="--level: 95%"></div>
                         </div>
                      </div>
                      <div class="stack-item">
                         <strong>Frameworkek</strong>
-                        <span>QBCore, ESX, custom hybrid megoldások</span>
+                        <span>QBCore, ESX, custom hibrid megoldások</span>
                         <div class="stack-meter">
                            <div class="stack-meter-fill" style="--level: 92%"></div>
                         </div>
                      </div>
                      <div class="stack-item">
                         <strong>Adatbázis</strong>
-                        <span>MySQL / MariaDB, struktúra, indexek, query optimalizáció</span>
+                        <span>MySQL / MariaDB, struktúra, indexek, biztonságos query-k</span>
                         <div class="stack-meter">
                            <div class="stack-meter-fill" style="--level: 85%"></div>
                         </div>
                      </div>
                      <div class="stack-item">
-                        <strong>UI &amp; Frontend</strong>
-                        <span>HTML, CSS, JS, NUI alapú felületek</span>
+                        <strong>NUI / UI</strong>
+                        <span>inventory, menük, RP UI, tiszta frontend logika</span>
                         <div class="stack-meter">
-                           <div class="stack-meter-fill" style="--level: 80%"></div>
+                           <div class="stack-meter-fill" style="--level: 82%"></div>
                         </div>
                      </div>
                      <div class="stack-item">
-                        <strong>DevOps &amp; Deploy</strong>
-                        <span>resource struktúra, update flow, staging / live környezet</span>
+                        <strong>Rendszer szemlélet</strong>
+                        <span
+                           >clean architecture, moduláris felépítés, jól bővíthető struktúra</span
+                        >
                         <div class="stack-meter">
-                           <div class="stack-meter-fill" style="--level: 78%"></div>
+                           <div class="stack-meter-fill" style="--level: 90%"></div>
                         </div>
                      </div>
                   </div>
@@ -1246,56 +1401,57 @@
                      <div class="process-step">
                         <div class="step-index">01</div>
                         <div class="step-body">
-                           <strong>Brief &amp; koncepció</strong>
-                           Röviden átnézzük, mit szeretne a szerver (style, közösség, economy,
-                           whitelist, stb.), és ehhez igazítom a technikai megoldást.
+                           <strong>Brief &amp; célok</strong>
+                           Megnézzük, milyen RP stílust, közösséget és hosszú távú célt szeretnél,
+                           ehhez igazítom a technikai irányt.
                         </div>
                      </div>
                      <div class="process-step">
                         <div class="step-index">02</div>
                         <div class="step-body">
-                           <strong>Design &amp; architektúra</strong>
-                           Átgondolt rendszerterv: milyen resource-ok legyenek, hol tárolunk adatot,
-                           hogyan csökkentjük a felesleges terhelést.
+                           <strong>Rendszerterv</strong>
+                           Melyik rész mit csinál, hol tároljuk az adatot, hogyan kapcsolódnak
+                           egymáshoz a script-ek – így elkerüljük a káoszt.
                         </div>
                      </div>
                      <div class="process-step">
                         <div class="step-index">03</div>
                         <div class="step-body">
-                           <strong>Fejlesztés &amp; iteráció</strong>
-                           Moduláris script-ek, tiszta kód, közben folyamatos tesztelés, hogy ne a
-                           játékosok legyenek az első QA csapat.
+                           <strong>Fejlesztés</strong>
+                           Moduláris, érthető kód, kommentekkel, config-központú megoldásokkal, hogy
+                           később is lehessen állítani dolgokat kódbuhera nélkül.
                         </div>
                      </div>
                      <div class="process-step">
                         <div class="step-index">04</div>
                         <div class="step-body">
                            <strong>Launch &amp; support</strong>
-                           Élesítés, finomhangolás a közösség visszajelzései alapján, bugfix és
-                           feature bővítés, ha a szerver nő.
+                           Bevezetés, finomhangolás, hibajavítás és további fejlesztések – ha a
+                           szerver növekszik, a rendszer is tudja követni.
                         </div>
                      </div>
                   </div>
                </div>
             </section>
 
+            <!-- CONTACT -->
             <section id="contact" class="section reveal">
                <div class="section-header">
                   <h2 class="section-title">Kapcsolat &amp; együttműködés</h2>
                   <p class="section-subtitle">
-                     Ha komolyan gondolod a szerveredet, én is komolyan fogom. Írj, ha hosszú távra
-                     keresel fejlesztőt, nem “egyszer összerakjuk azt csá” jelleggel.
+                     Ha hosszú távra gondolkodsz a szervereddel, érdemes fejlesztésben is így
+                     hozzáállni. Írj, ha komoly, stabil RP alapot szeretnél, nem gyorsan összedobott
+                     script halmazt.
                   </p>
                </div>
 
                <div class="contact-card">
                   <div>
-                     <h3 class="contact-title">
-                        Dolgozzunk együtt a következő erős FiveM szervereden.
-                     </h3>
+                     <h3 class="contact-title">Beszéljünk a következő RP projektedről.</h3>
                      <p class="contact-text">
-                        Röviden írd le, hogy milyen szervered van vagy milyen szervert szeretnél
-                        indítani (RP stílus, player base, célok), és hogy miben számítanál rám.
+                        Pár mondatban írd le, milyen állapotban van most a szervered (ötlet /
+                        fejlesztés / már fut), milyen RP stílust céloztok, és miben számítanál rám
+                        fejlesztőként.
                      </p>
                      <div class="contact-channels">
                         <div id="discord-pill" class="contact-pill button-like">
@@ -1340,7 +1496,7 @@
                            <textarea
                               id="message"
                               rows="3"
-                              placeholder="Röviden: core system, új script-ek, átdolgozás, optimalizálás, teljes rebuild..."
+                              placeholder="Röviden: core system, új RP rendszerek, inventory, UI, teljes rebuild..."
                            ></textarea>
                         </div>
                         <button class="contact-submit" type="submit">
@@ -1371,6 +1527,11 @@
                >
                <span
                   class="footer-link"
+                  onclick="document.getElementById('references').scrollIntoView({behavior:'smooth'})"
+                  >References</span
+               >
+               <span
+                  class="footer-link"
                   onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
                   >Kapcsolat</span
                >
@@ -1379,6 +1540,7 @@
       </div>
 
       <script>
+         // Scroll reveal
          const revealEls = document.querySelectorAll(".reveal");
          const meterFills = document.querySelectorAll(".stack-meter-fill");
 
@@ -1398,18 +1560,19 @@
 
          revealEls.forEach((el) => observer.observe(el));
 
+         // Hero contact → base e-mail
          function openEmailBase() {
             const subject = encodeURIComponent("FiveM fejlesztő együttműködés");
             const body = encodeURIComponent(
-               "Szia Dante!\n\n" +
-                  "Egy új FiveM projekttel kapcsolatban kereslek.\n\n" +
-                  "Röviden a szerverről / ötletről:\n" +
-                  "- Név: \n" +
-                  "- Típus: \n" +
-                  "- Jelenlegi állapot: \n\n" +
-                  "Amit fejlesztőtől várok: \n" +
-                  "- \n\n" +
-                  "Üdv,\n" +
+               "Szia Dante!\\n\\n" +
+                  "Egy új vagy meglévő FiveM projekttel kapcsolatban kereslek.\\n\\n" +
+                  "Röviden a szerverről / ötletről:\\n" +
+                  "- Név: \\n" +
+                  "- Típus: \\n" +
+                  "- Jelenlegi állapot: \\n\\n" +
+                  "Amit fejlesztőtől várok:\\n" +
+                  "- \\n\\n" +
+                  "Üdv,\\n" +
                   "[saját neved]"
             );
             window.location.href = `mailto:hackerzero63@gmail.com?subject=${subject}&body=${body}`;
@@ -1420,6 +1583,7 @@
             heroBtn.addEventListener("click", openEmailBase);
          }
 
+         // Contact form → email with filled content
          const contactForm = document.getElementById("contact-form");
          if (contactForm) {
             contactForm.addEventListener("submit", function (e) {
@@ -1431,20 +1595,20 @@
 
                const subject = encodeURIComponent("Új FiveM megkeresés – " + name);
                const body = encodeURIComponent(
-                  "Szia Dante!\n\n" +
-                     "Egy új / meglévő FiveM projekttel kapcsolatban kereslek.\n\n" +
+                  "Szia Dante!\\n\\n" +
+                     "Egy új / meglévő FiveM projekttel kapcsolatban kereslek.\\n\\n" +
                      "Szerver neve: " +
                      name +
-                     "\n" +
+                     "\\n" +
                      "Szerver típusa: " +
                      type +
-                     "\n\n" +
-                     "Mit szeretnék fejlesztetni:\n" +
+                     "\\n\\n" +
+                     "Mit szeretnék fejlesztetni:\\n" +
                      msg +
-                     "\n\n" +
-                     "Elérhetőségem Discordon / e-mailben:\n" +
-                     "[ide írd be magad]\n\n" +
-                     "Üdv,\n" +
+                     "\\n\\n" +
+                     "Elérhetőségem Discordon / e-mailben:\\n" +
+                     "[ide írd be magad]\\n\\n" +
+                     "Üdv,\\n" +
                      "[neved]"
                );
 
@@ -1452,6 +1616,7 @@
             });
          }
 
+         // Discord név vágólapra
          const discordPill = document.getElementById("discord-pill");
          if (discordPill) {
             discordPill.addEventListener("click", async () => {
@@ -1461,7 +1626,6 @@
                      await navigator.clipboard.writeText(value);
                      alert("Discord név kimásolva: " + value);
                   } else {
-                     // fallback
                      const temp = document.createElement("textarea");
                      temp.value = value;
                      document.body.appendChild(temp);
@@ -1475,6 +1639,39 @@
                }
             });
          }
+
+         document.addEventListener("DOMContentLoaded", () => {
+            const startScreen = document.getElementById("start-screen");
+            const startBtn = document.getElementById("start-btn");
+            const splash = document.getElementById("video-splash");
+            const video = document.getElementById("intro-video");
+
+            // START gomb → splash videó hanggal indul
+            startBtn.addEventListener("click", () => {
+               // Start screen fade
+               startScreen.style.opacity = "0";
+               setTimeout(() => startScreen.remove(), 600);
+
+               // Videó megjelenítése
+               splash.style.display = "flex";
+
+               // Hanggal indul
+               video.volume = 1.0;
+               video.muted = false;
+
+               // Videó lejátszása user interaction után → hang engedélyezve
+               video.play().catch((err) => console.log("Playback error:", err));
+            });
+
+            // Videó vége → splash fade-out
+            video.addEventListener("ended", () => {
+               splash.style.opacity = "0";
+               setTimeout(() => {
+                  splash.remove();
+                  document.body.classList.remove("splash-active");
+               }, 800);
+            });
+         });
       </script>
    </body>
 </html>
